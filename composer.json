@@ -1,17 +1,17 @@
 {
-    "name": "waffle-commons/{COMPONENT_NAME}",
-    "version": "0.1.0-alpha1",
-    "description": "{COMPONENT_NAME} component for Waffle framework.",
+    "name": "waffle-commons/error-handler",
+    "version": "0.1.0-alpha3",
+    "description": "ErrorHandler component for Waffle framework.",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Waffle\\Commons\\{COMPONENT_NAME}\\": "src/"
+            "Waffle\\Commons\\ErrorHandler\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "WaffleTests\\Commons\\{COMPONENT_NAME}\\": "tests/src/"
+            "WaffleTests\\Commons\\ErrorHandler\\": "tests/src/"
         }
     },
     "authors": [
