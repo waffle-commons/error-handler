@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0aec87e854df17b1a2961c09fc9e99fd",
+    "content-hash": "a294fc814080ea56ba5e55aa8f9fea64",
     "packages": [
         {
             "name": "psr/cache",
@@ -435,7 +435,7 @@
             "dist": {
                 "type": "path",
                 "url": "../contracts",
-                "reference": "d4dfcfa5bd7a7850946ea05453147c7176dcb6e0"
+                "reference": "84b780ebc7bc04e0711036b3ced6ca64baf5749c"
             },
             "require": {
                 "php": "^8.5",
@@ -448,7 +448,7 @@
                 "psr/log": "^3.0"
             },
             "require-dev": {
-                "carthage-software/mago": "^1.0.0-beta.31",
+                "carthage-software/mago": "^1.0.0-rc",
                 "php-mock/php-mock-phpunit": "^2.13",
                 "phpunit/phpunit": "^12.0",
                 "vimeo/psalm": "^6.13"
@@ -5445,7 +5445,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "carthage-software/mago": 10,
+        "carthage-software/mago": 5,
         "waffle-commons/contracts": 20
     },
     "prefer-stable": false,

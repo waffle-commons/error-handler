@@ -18,7 +18,7 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
 {
     public function __construct(
         private ResponseFactoryInterface $responseFactory,
-        private bool $debug = false
+        private bool $debug = false,
     ) {}
 
     public function render(Throwable $e, ServerRequestInterface $request): ResponseInterface

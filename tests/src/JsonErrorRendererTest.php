@@ -29,15 +29,13 @@ final class JsonErrorRendererTest extends TestCase
         $request->method('getUri')->willReturn($uri);
 
         $response->method('getBody')->willReturn($stream);
-        $response->expects($this->once())
+        $response
+            ->expects($this->once())
             ->method('withHeader')
             ->with('Content-Type', 'application/problem+json')
             ->willReturnSelf();
 
-        $factory->expects($this->once())
-            ->method('createResponse')
-            ->with(500)
-            ->willReturn($response);
+        $factory->expects($this->once())->method('createResponse')->with(500)->willReturn($response);
 
         // 3. Execution
         $renderer = new JsonErrorRenderer($factory, debug: false);

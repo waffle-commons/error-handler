@@ -18,7 +18,7 @@ use Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface;
 final readonly class ErrorHandlerMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private ErrorRendererInterface $renderer
+        private ErrorRendererInterface $renderer,
     ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
