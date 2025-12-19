@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace WaffleTests\Commons\ErrorHandler\Middleware;
 
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 use Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface;
 use Waffle\Commons\ErrorHandler\Middleware\ErrorHandlerMiddleware;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 #[CoversClass(ErrorHandlerMiddleware::class)]
 #[AllowMockObjectsWithoutExpectations]
@@ -25,10 +25,7 @@ final class ErrorHandlerMiddlewareTest extends TestCase
         $handler = $this->createMock(RequestHandlerInterface::class);
         $response = $this->createStub(ResponseInterface::class);
 
-        $handler->expects($this->once())
-            ->method('handle')
-            ->with($request)
-            ->willReturn($response);
+        $handler->expects($this->once())->method('handle')->with($request)->willReturn($response);
 
         $renderer->expects($this->never())->method('render');
 
@@ -46,15 +43,9 @@ final class ErrorHandlerMiddlewareTest extends TestCase
         $response = $this->createStub(ResponseInterface::class);
         $exception = new RuntimeException('Test Exception');
 
-        $handler->expects($this->once())
-            ->method('handle')
-            ->with($request)
-            ->willThrowException($exception);
+        $handler->expects($this->once())->method('handle')->with($request)->willThrowException($exception);
 
-        $renderer->expects($this->once())
-            ->method('render')
-            ->with($exception, $request)
-            ->willReturn($response);
+        $renderer->expects($this->once())->method('render')->with($exception, $request)->willReturn($response);
 
         $middleware = new ErrorHandlerMiddleware($renderer);
         $result = $middleware->process($request, $handler);

@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace WaffleTests\Commons\ErrorHandler;
 
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 use RuntimeException;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
-use Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer;
 use Waffle\Commons\Contracts\Routing\Exception\RouteNotFoundExceptionInterface;
+use Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer;
 
 #[CoversClass(JsonErrorRenderer::class)]
 #[AllowMockObjectsWithoutExpectations]
@@ -66,14 +66,17 @@ final class JsonErrorRendererTest extends TestCase
         $factory->method('createResponse')->willReturn($response);
 
         // Expect write called with json containing trace
-        $stream->expects($this->once())->method('write')->willReturnCallback(function($json) {
-            $data = json_decode($json, true);
-            $this->assertArrayHasKey('trace', $data);
-            $this->assertArrayHasKey('file', $data);
-            $this->assertArrayHasKey('line', $data);
-            $this->assertEquals('Boom!', $data['detail']);
-            return strlen($json);
-        });
+        $stream
+            ->expects($this->once())
+            ->method('write')
+            ->willReturnCallback(function ($json) {
+                $data = json_decode($json, true);
+                $this->assertArrayHasKey('trace', $data);
+                $this->assertArrayHasKey('file', $data);
+                $this->assertArrayHasKey('line', $data);
+                $this->assertEquals('Boom!', $data['detail']);
+                return strlen($json);
+            });
 
         $renderer = new JsonErrorRenderer($factory, debug: true);
         $exception = new RuntimeException('Boom!');
@@ -98,12 +101,15 @@ final class JsonErrorRendererTest extends TestCase
         $factory->method('createResponse')->willReturn($response);
 
         // Expect write called with json containing generic error message
-        $stream->expects($this->once())->method('write')->willReturnCallback(function($json) {
-            $data = json_decode($json, true);
-            $this->assertArrayNotHasKey('trace', $data);
-            $this->assertEquals('An internal server error occurred.', $data['detail']);
-            return strlen($json);
-        });
+        $stream
+            ->expects($this->once())
+            ->method('write')
+            ->willReturnCallback(function ($json) {
+                $data = json_decode($json, true);
+                $this->assertArrayNotHasKey('trace', $data);
+                $this->assertEquals('An internal server error occurred.', $data['detail']);
+                return strlen($json);
+            });
 
         $renderer = new JsonErrorRenderer($factory, debug: false);
         $exception = new RuntimeException('Secret DB Error');
@@ -115,8 +121,8 @@ final class JsonErrorRendererTest extends TestCase
     {
         $factory = $this->createMock(ResponseFactoryInterface::class);
         $response = $this->createMock(ResponseInterface::class);
-        
-         // We need the stream mock otherwise getBody()->write() calls on null
+
+        // We need the stream mock otherwise getBody()->write() calls on null
         $stream = $this->createStub(StreamInterface::class);
         $response->method('getBody')->willReturn($stream);
         $response->method('withHeader')->willReturnSelf();
@@ -128,7 +134,7 @@ final class JsonErrorRendererTest extends TestCase
         $request->method('getUri')->willReturn($this->createStub(UriInterface::class));
 
         $renderer = new JsonErrorRenderer($factory, debug: false);
-        
+
         $exception = new class extends RuntimeException implements RouteNotFoundExceptionInterface {};
 
         $renderer->render($exception, $request);
@@ -138,7 +144,7 @@ final class JsonErrorRendererTest extends TestCase
     {
         $factory = $this->createMock(ResponseFactoryInterface::class);
         $response = $this->createMock(ResponseInterface::class);
-        
+
         $stream = $this->createStub(StreamInterface::class);
         $response->method('getBody')->willReturn($stream);
         $response->method('withHeader')->willReturnSelf();
@@ -150,7 +156,7 @@ final class JsonErrorRendererTest extends TestCase
         $request->method('getUri')->willReturn($this->createStub(UriInterface::class));
 
         $renderer = new JsonErrorRenderer($factory, debug: false);
-        
+
         $exception = new \InvalidArgumentException('Bad input');
 
         $renderer->render($exception, $request);

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace WaffleTests\Commons\ErrorHandler;
 
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -31,17 +31,17 @@ class JsonErrorRendererCoverageTest extends TestCase
         // 400: InvalidArgumentException
         // 404: RouteNotFoundExceptionInterface
         // 500: others
-        
+
         // I can't currently trigger 401, 403, 405 because `determineStatusCode` doesn't support them yet.
         // However, I can use reflection to test private `getTitleForStatus` or mock `determineStatusCode`?
         // No, I can't mock private method of class under test.
         // I can use Reflection to invoke private method `getTitleForStatus`.
-        
+
         $renderer = new JsonErrorRenderer($this->createMock(ResponseFactoryInterface::class));
         $reflection = new \ReflectionClass($renderer);
         $method = $reflection->getMethod('getTitleForStatus');
         // $method->setAccessible(true); // Deprecated in PHP 8.5, no longer needed.
-        
+
         $title = $method->invoke($renderer, $statusCode);
         $this->assertEquals($expectedTitle, $title);
     }

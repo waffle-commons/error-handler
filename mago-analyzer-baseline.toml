@@ -1,0 +1,253 @@
+variant = "loose"
+
+[[issues]]
+file = "src/Middleware/ErrorHandlerMiddleware.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface)`).'
+count = 1
+
+[[issues]]
+file = "src/Middleware/ErrorHandlerMiddleware.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `waffle\commons\errorhandler\middleware\errorhandlermiddleware::process`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Renderer/JsonErrorRenderer.php"
+code = "non-existent-class-like"
+message = 'Class `Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer` cannot implement unknown type `ErrorRendererInterface`'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererCoverageTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererCoverageTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Event\NoPreviousThrowableException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererCoverageTest::testGetTitleForStatus`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererCoverageTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererCoverageTest::testGetTitleForStatus`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererCoverageTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\InvalidArgumentException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererCoverageTest::testGetTitleForStatus`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererCoverageTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\MockObject\Exception` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererCoverageTest::testGetTitleForStatus`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererCoverageTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `ReflectionException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererCoverageTest::testGetTitleForStatus`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #1 of `json_decode`: expected `string`, but found `mixed`."
+count = 2
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #1 of `strlen`: expected `string`, but found `mixed`."
+count = 2
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #2 of `phpunit\framework\assert::assertarrayhaskey`: expected `ArrayAccess<array-key, mixed>|array<array-key, mixed>`, but found `mixed`.'
+count = 3
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #2 of `phpunit\framework\assert::assertarraynothaskey`: expected `ArrayAccess<array-key, mixed>|array<array-key, mixed>`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "mixed-array-access"
+message = "Unsafe array access on type `mixed`."
+count = 2
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "non-existent-class-like"
+message = "Class `class@anonymous:7285600447416413641-5443:5523` cannot implement unknown type `RouteNotFoundExceptionInterface`"
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Event\NoPreviousThrowableException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderFormatsRfc7807Json`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Event\NoPreviousThrowableException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderHandlesInvalidArgumentException`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Event\NoPreviousThrowableException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderHandlesRouteNotFoundException`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Event\NoPreviousThrowableException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderIncludesTraceInDebugMode`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Event\NoPreviousThrowableException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderMasksUseInternalErrorInProdMode`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\InvalidArgumentException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderFormatsRfc7807Json`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\InvalidArgumentException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderHandlesInvalidArgumentException`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\InvalidArgumentException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderHandlesRouteNotFoundException`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\InvalidArgumentException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderIncludesTraceInDebugMode`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\InvalidArgumentException` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderMasksUseInternalErrorInProdMode`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\MockObject\Exception` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderFormatsRfc7807Json`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\MockObject\Exception` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderHandlesInvalidArgumentException`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\MockObject\Exception` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderHandlesRouteNotFoundException`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\MockObject\Exception` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderIncludesTraceInDebugMode`.'
+count = 1
+
+[[issues]]
+file = "tests/src/JsonErrorRendererTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\MockObject\Exception` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderMasksUseInternalErrorInProdMode`.'
+count = 1
+
+[[issues]]
+file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #1 of `waffle\commons\errorhandler\middleware\errorhandlermiddleware::__construct`: expected `unknown-ref(Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface)`, but found `PHPUnit\Framework\MockObject\MockObject&Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface`.'
+count = 2
+
+[[issues]]
+file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 4
+
+[[issues]]
+file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
+code = "non-existent-class-like"
+message = 'Class, Interface, or Trait `Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface` does not exist.'
+count = 4
+
+[[issues]]
+file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Event\NoPreviousThrowableException` in `WaffleTests\Commons\ErrorHandler\Middleware\ErrorHandlerMiddlewareTest::testProcessCatchesExceptionAndDelegatesToRenderer`.'
+count = 1
+
+[[issues]]
+file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Event\NoPreviousThrowableException` in `WaffleTests\Commons\ErrorHandler\Middleware\ErrorHandlerMiddlewareTest::testProcessReturnsResponseFromHandlerOnSuccess`.'
+count = 1
+
+[[issues]]
+file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `WaffleTests\Commons\ErrorHandler\Middleware\ErrorHandlerMiddlewareTest::testProcessCatchesExceptionAndDelegatesToRenderer`.'
+count = 1
+
+[[issues]]
+file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `WaffleTests\Commons\ErrorHandler\Middleware\ErrorHandlerMiddlewareTest::testProcessReturnsResponseFromHandlerOnSuccess`.'
+count = 1
+
+[[issues]]
+file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\InvalidArgumentException` in `WaffleTests\Commons\ErrorHandler\Middleware\ErrorHandlerMiddlewareTest::testProcessCatchesExceptionAndDelegatesToRenderer`.'
+count = 1
+
+[[issues]]
+file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\InvalidArgumentException` in `WaffleTests\Commons\ErrorHandler\Middleware\ErrorHandlerMiddlewareTest::testProcessReturnsResponseFromHandlerOnSuccess`.'
+count = 1
+
+[[issues]]
+file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\MockObject\Exception` in `WaffleTests\Commons\ErrorHandler\Middleware\ErrorHandlerMiddlewareTest::testProcessCatchesExceptionAndDelegatesToRenderer`.'
+count = 1
+
+[[issues]]
+file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\MockObject\Exception` in `WaffleTests\Commons\ErrorHandler\Middleware\ErrorHandlerMiddlewareTest::testProcessReturnsResponseFromHandlerOnSuccess`.'
+count = 1
