@@ -1,6 +1,6 @@
 {
     "name": "waffle-commons/error-handler",
-    "version": "0.1.0-alpha3",
+    "version": "0.1.0-alpha4",
     "description": "ErrorHandler component for Waffle framework.",
     "type": "library",
     "license": "MIT",
@@ -22,8 +22,8 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.4",
-        "waffle-commons/contracts": "1.0.0-dev",
+        "php": "^8.5",
+        "waffle-commons/contracts": "self.version",
         "psr/http-message": "^2.0",
         "psr/http-factory": "^1.1"
     },
@@ -33,17 +33,6 @@
         "vimeo/psalm": "^6.13",
         "php-mock/php-mock-phpunit": "^2.13"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "canonical": false,
-            "url": "../contracts",
-            "options": {
-                "versions": { "waffle-commons/contracts": "1.0.0-dev" },
-                "symlink": true
-            }
-        }
-    ],
     "scripts": {
         "formatter": "vendor/bin/mago fmt",
         "linter": "vendor/bin/mago lint",

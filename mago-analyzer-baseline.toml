@@ -1,21 +1,15 @@
 variant = "loose"
 
 [[issues]]
-file = "src/Middleware/ErrorHandlerMiddleware.php"
-code = "invalid-method-access"
-message = 'Attempting to access a method on a non-object type (`unknown-ref(Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface)`).'
-count = 1
-
-[[issues]]
-file = "src/Middleware/ErrorHandlerMiddleware.php"
-code = "mixed-return-statement"
-message = 'Could not infer a precise return type for function `waffle\commons\errorhandler\middleware\errorhandlermiddleware::process`. Saw type `mixed`.'
+file = "src/Renderer/JsonErrorRenderer.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer::render`.'
 count = 1
 
 [[issues]]
 file = "src/Renderer/JsonErrorRenderer.php"
-code = "non-existent-class-like"
-message = 'Class `Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer` cannot implement unknown type `ErrorRendererInterface`'
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RuntimeException` in `Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer::render`.'
 count = 1
 
 [[issues]]
@@ -89,12 +83,6 @@ file = "tests/src/JsonErrorRendererTest.php"
 code = "mixed-assignment"
 message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
 count = 2
-
-[[issues]]
-file = "tests/src/JsonErrorRendererTest.php"
-code = "non-existent-class-like"
-message = "Class `class@anonymous:7285600447416413641-5443:5523` cannot implement unknown type `RouteNotFoundExceptionInterface`"
-count = 1
 
 [[issues]]
 file = "tests/src/JsonErrorRendererTest.php"
@@ -185,24 +173,6 @@ file = "tests/src/JsonErrorRendererTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\MockObject\Exception` in `WaffleTests\Commons\ErrorHandler\JsonErrorRendererTest::testRenderMasksUseInternalErrorInProdMode`.'
 count = 1
-
-[[issues]]
-file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
-code = "invalid-argument"
-message = 'Invalid argument type for argument #1 of `waffle\commons\errorhandler\middleware\errorhandlermiddleware::__construct`: expected `unknown-ref(Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface)`, but found `PHPUnit\Framework\MockObject\MockObject&Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface`.'
-count = 2
-
-[[issues]]
-file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
-code = "mixed-method-access"
-message = "Attempting to access a method on a non-object type (`mixed`)."
-count = 4
-
-[[issues]]
-file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
-code = "non-existent-class-like"
-message = 'Class, Interface, or Trait `Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface` does not exist.'
-count = 4
 
 [[issues]]
 file = "tests/src/Middleware/ErrorHandlerMiddlewareTest.php"
