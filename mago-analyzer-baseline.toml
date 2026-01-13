@@ -2,6 +2,12 @@ variant = "loose"
 
 [[issues]]
 file = "src/Renderer/JsonErrorRenderer.php"
+code = "less-specific-return-statement"
+message = 'Returned type `psr\http\message\messageinterface&static` is less specific than the declared return type `Psr\Http\Message\ResponseInterface` for function `waffle\commons\errorhandler\renderer\jsonerrorrenderer::render`.'
+count = 1
+
+[[issues]]
+file = "src/Renderer/JsonErrorRenderer.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `InvalidArgumentException` in `Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer::render`.'
 count = 1
