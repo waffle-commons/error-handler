@@ -42,9 +42,7 @@ final readonly class ErrorHandlerMiddleware implements MiddlewareInterface
 
     private function logException(Throwable $e, ServerRequestInterface $request): void
     {
-        $this->logger->critical(
-            message: $e->getMessage(),
-            context: [
+        $this->logger->critical(message: $e->getMessage(), context: [
             'exception' => get_class($e),
             // 'trace' => $e->getTrace(), // Uncomment for stack trace
             'file' => $e->getFile(),

@@ -66,7 +66,7 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
 
         // Logic can be extended here for 403, 405, etc.
         // Default to 500
-        return 500;
+        return $e->getCode() ?? 500;
     }
 
     private function getTitleForStatus(int $status): string
