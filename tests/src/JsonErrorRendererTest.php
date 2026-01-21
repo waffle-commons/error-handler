@@ -25,7 +25,8 @@ final class JsonErrorRendererTest extends TestCase
         // 1. Setup
         $factory = $this->createMock(ResponseFactoryInterface::class);
         $response = $this->createMock(ResponseInterface::class);
-        $stream = $this->createStub(StreamInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $stream->method('write')->willReturn(0);
         $request = $this->createStub(ServerRequestInterface::class);
         $uri = $this->createStub(UriInterface::class);
 
@@ -123,7 +124,8 @@ final class JsonErrorRendererTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
 
         // We need the stream mock otherwise getBody()->write() calls on null
-        $stream = $this->createStub(StreamInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $stream->method('write')->willReturn(0);
         $response->method('getBody')->willReturn($stream);
         $response->method('withHeader')->willReturnSelf();
 
@@ -145,7 +147,8 @@ final class JsonErrorRendererTest extends TestCase
         $factory = $this->createMock(ResponseFactoryInterface::class);
         $response = $this->createMock(ResponseInterface::class);
 
-        $stream = $this->createStub(StreamInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $stream->method('write')->willReturn(0);
         $response->method('getBody')->willReturn($stream);
         $response->method('withHeader')->willReturnSelf();
 

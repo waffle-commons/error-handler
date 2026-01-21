@@ -7,12 +7,6 @@ message = "Avoid `else` clauses."
 count = 1
 
 [[issues]]
-file = "src/Renderer/JsonErrorRenderer.php"
-code = "no-redundant-use"
-message = "Unused import: `RouteNotFoundExceptionInterface`."
-count = 1
-
-[[issues]]
 file = "tests/src/AbstractTestCase.php"
 code = "no-redundant-method-override"
 message = "Redundant method override."

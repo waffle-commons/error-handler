@@ -64,7 +64,14 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
         }
 
         // Common mapping for specific exceptions could go here
-        // (e.g. InvalidArgumentException -> 400)
+        // Common mapping for specific exceptions
+        if ($e instanceof RouteNotFoundExceptionInterface) {
+            return 404;
+        }
+
+        if ($e instanceof \InvalidArgumentException) {
+            return 400;
+        }
 
         // Default to 500 Internal Server Error
         return 500;
