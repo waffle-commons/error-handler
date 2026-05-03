@@ -2,12 +2,6 @@ variant = "loose"
 
 [[issues]]
 file = "src/Renderer/JsonErrorRenderer.php"
-code = "less-specific-return-statement"
-message = 'Returned type `psr\http\message\messageinterface&static` is less specific than the declared return type `Psr\Http\Message\ResponseInterface` for function `waffle\commons\errorhandler\renderer\jsonerrorrenderer::render`.'
-count = 1
-
-[[issues]]
-file = "src/Renderer/JsonErrorRenderer.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `InvalidArgumentException` in `Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer::render`.'
 count = 1
@@ -69,13 +63,13 @@ count = 2
 [[issues]]
 file = "tests/src/JsonErrorRendererTest.php"
 code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `phpunit\framework\assert::assertarrayhaskey`: expected `ArrayAccess<array-key, mixed>|array<array-key, mixed>`, but found `mixed`.'
+message = 'Invalid argument type for argument #2 of `PHPUnit\Framework\Assert::assertArrayHasKey`: expected `ArrayAccess<array-key, mixed>|array<array-key, mixed>`, but found `mixed`.'
 count = 3
 
 [[issues]]
 file = "tests/src/JsonErrorRendererTest.php"
 code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `phpunit\framework\assert::assertarraynothaskey`: expected `ArrayAccess<array-key, mixed>|array<array-key, mixed>`, but found `mixed`.'
+message = 'Invalid argument type for argument #2 of `PHPUnit\Framework\Assert::assertArrayNotHasKey`: expected `ArrayAccess<array-key, mixed>|array<array-key, mixed>`, but found `mixed`.'
 count = 1
 
 [[issues]]
