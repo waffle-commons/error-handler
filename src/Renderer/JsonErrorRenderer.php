@@ -56,6 +56,15 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
 
     private function determineStatusCode(Throwable $e): int
     {
+        $code = $e->getCode();
+
+        // If the exception code is a valid HTTP error status, use it.
+        if (is_int($code) && $code >= 400 && $code < 600) {
+            return $code;
+        }
+
+        // Common mapping for specific exceptions could go here
+        // Common mapping for specific exceptions
         if ($e instanceof RouteNotFoundExceptionInterface) {
             return 404;
         }
@@ -64,8 +73,7 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
             return 400;
         }
 
-        // Logic can be extended here for 403, 405, etc.
-        // Default to 500
+        // Default to 500 Internal Server Error
         return 500;
     }
 
