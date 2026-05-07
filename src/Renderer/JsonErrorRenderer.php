@@ -39,11 +39,11 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
             $payload['trace'] = explode("\n", $e->getTraceAsString());
             $payload['file'] = $e->getFile();
             $payload['line'] = $e->getLine();
-        } else {
-            // In production, mask generic internal errors to avoid leaking info
-            if ($status >= 500) {
-                $payload['detail'] = 'An internal server error occurred.';
-            }
+        }
+
+        // In production, mask generic internal errors to avoid leaking info
+        if ($status >= 500 && !$this->debug) {
+            $payload['detail'] = 'An internal server error occurred.';
         }
 
         $json = json_encode($payload, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);

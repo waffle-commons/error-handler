@@ -9,11 +9,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UriInterface;
-use RuntimeException;
 use Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer;
 
 #[CoversClass(JsonErrorRenderer::class)]
@@ -43,7 +38,7 @@ class JsonErrorRendererCoverageTest extends TestCase
         // $method->setAccessible(true); // Deprecated in PHP 8.5, no longer needed.
 
         $title = $method->invoke($renderer, $statusCode);
-        $this->assertEquals($expectedTitle, $title);
+        static::assertEquals($expectedTitle, $title);
     }
 
     public static function statusCodeProvider(): array

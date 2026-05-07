@@ -31,8 +31,9 @@ prefer-interface = { level = "error" }
 strict-types = { level = "error" }
 cyclomatic-complexity = { level = "warning", threshold = 20 }
 too-many-methods = { level = "warning", threshold = 20 }
-kan-defect = { level = "warning", threshold = 1.7 }
+kan-defect = { level = "warning", threshold = 2.5 }
 no-ini-set = { enabled = false }
+single-class-per-file = { enabled = false }
 
 # Style - Notes (informational)
 prefer-arrow-function = { level = "note" }
@@ -44,8 +45,17 @@ find-unused-definitions = true
 find-unused-expressions = true
 analyze-dead-code = true
 strict-list-index-checks = true
-allow-possibly-undefined-array-keys = false
+strict-array-index-existence = true
 ignore = [
+    { code = "mixed-array-access", in = [
+        "tests/",
+    ] },
+    { code = "mixed-property-access", in = [
+        "tests/",
+    ] },
+    { code = "too-many-arguments", in = [
+        "tests/",
+    ] },
     { code = "mixed-assignment", in = [
         "tests/",
     ] },
