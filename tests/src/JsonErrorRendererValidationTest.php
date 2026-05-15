@@ -81,7 +81,7 @@ final class JsonErrorRendererValidationTest extends TestCase
         $renderer->render($this->exception('payload invalid'), $request);
 
         static::assertIsString($captured);
-        $payload = json_decode((string) $captured, associative: true);
+        $payload = json_decode($captured, associative: true);
         static::assertSame(422, $payload['status']);
         static::assertSame('Unprocessable Entity', $payload['title']);
         static::assertSame('payload invalid', $payload['detail']);
