@@ -9,6 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 use Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface;
+use Waffle\Commons\Contracts\Exception\Validation\ValidationExceptionInterface;
 use Waffle\Commons\Contracts\Routing\Exception\RouteNotFoundExceptionInterface;
 
 /**
@@ -34,6 +35,14 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
             'instance' => $request->getUri()->getPath(),
         ];
 
+        // Validation errors carry an optional field name (RFC-011): surface it for clients.
+        if ($e instanceof ValidationExceptionInterface) {
+            $field = $e->getField();
+            if ($field !== null) {
+                $payload['field'] = $field;
+            }
+        }
+
         // Security: Only expose trace in debug mode
         if ($this->debug) {
             $payload['trace'] = explode("\n", $e->getTraceAsString());
@@ -56,6 +65,12 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
 
     private function determineStatusCode(Throwable $e): int
     {
+        // Validation failures take precedence over the code-based heuristic so a thrown
+        // ValidationException is always surfaced as 422, regardless of any custom code.
+        if ($e instanceof ValidationExceptionInterface) {
+            return 422;
+        }
+
         $code = $e->getCode();
 
         // If the exception code is a valid HTTP error status, use it.
@@ -85,6 +100,7 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
             403 => 'Forbidden',
             404 => 'Not Found',
             405 => 'Method Not Allowed',
+            422 => 'Unprocessable Entity',
             500 => 'Internal Server Error',
             default => 'Unknown Error',
         };
