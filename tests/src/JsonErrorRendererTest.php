@@ -71,7 +71,7 @@ final class JsonErrorRendererTest extends TestCase
             ->expects($this->once())
             ->method('write')
             ->willReturnCallback(function ($json) {
-                $data = json_decode($json, true);
+                $data = json_decode(json: $json, associative: true);
                 $this->assertArrayHasKey('trace', $data);
                 $this->assertArrayHasKey('file', $data);
                 $this->assertArrayHasKey('line', $data);
@@ -106,7 +106,7 @@ final class JsonErrorRendererTest extends TestCase
             ->expects($this->once())
             ->method('write')
             ->willReturnCallback(function ($json) {
-                $data = json_decode($json, true);
+                $data = json_decode(json: $json, associative: true);
                 $this->assertArrayNotHasKey('trace', $data);
                 $this->assertEquals('An internal server error occurred.', $data['detail']);
                 return strlen($json);
