@@ -7,7 +7,78 @@
 [![Packagist License](https://img.shields.io/packagist/l/waffle-commons/error-handler)](https://github.com/waffle-commons/error-handler/blob/main/LICENSE.md)
 
 Waffle Error Handler Component
-===============================
+==============================
 
+> **Release:** `v0.1.0-beta0`
+> **PSR Compliance:** PSR-15 (middleware), PSR-3 (logging), RFC 7807 (`application/problem+json`)
 
+The outermost middleware in every Waffle pipeline. Catches `Throwable` thrown deeper in the stack, logs it via the injected PSR-3 logger, and renders an RFC 7807 "Problem Details" JSON response.
 
+## 📦 Installation
+
+```bash
+composer require waffle-commons/error-handler
+```
+
+## 🧱 Surface
+
+| Class | Role |
+| :--- | :--- |
+| `Waffle\Commons\ErrorHandler\Middleware\ErrorHandlerMiddleware` | PSR-15 middleware. Wraps `$handler->handle()` in `try/catch(Throwable)`, logs, then delegates to the renderer. |
+| `Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer` | `final readonly` renderer implementing `ErrorRendererInterface`. Produces RFC 7807 JSON. |
+
+## 🚀 Wiring it up
+
+```php
+use Waffle\Commons\ErrorHandler\Middleware\ErrorHandlerMiddleware;
+use Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer;
+use Waffle\Commons\Http\Factory\ResponseFactory;
+use Waffle\Commons\Log\StreamLogger;
+
+$renderer = new JsonErrorRenderer(
+    responseFactory: new ResponseFactory(),
+    debug: $appDebug, // false in production
+);
+
+$stack->prepend(new ErrorHandlerMiddleware($renderer, new StreamLogger()));
+```
+
+## 📦 RFC 7807 payload
+
+`JsonErrorRenderer::render(Throwable $e, ServerRequestInterface $request)` always emits the canonical RFC 7807 shape, encoded with `JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES`:
+
+```json
+{
+  "type":     "about:blank",
+  "title":    "Bad Request",
+  "status":   400,
+  "detail":   "Untrusted Host \"evil.example\".",
+  "instance": "/login"
+}
+```
+
+Extensions added by Waffle:
+
+- If the exception implements `Waffle\Commons\Contracts\Exception\Validation\ValidationExceptionInterface` and `getField()` returns non-null, a `field` key is added to the payload (RFC-011).
+- If `$debug = true`, additional `trace`, `file`, `line` keys are added.
+- In production (`$debug = false`), any 5xx `detail` is masked to `"An internal server error occurred."` to avoid leaking implementation details.
+
+## 🧩 Status-code resolution
+
+`JsonErrorRenderer::determineStatusCode(Throwable $e)` walks well-known exception interfaces (e.g. `RouteNotFoundExceptionInterface` → 404, `ValidationExceptionInterface` → 422, `\InvalidArgumentException` → 400) and falls back to `500` for unknown throwables. The matching is interface-based — your application exceptions can opt in by implementing the right contract interface.
+
+## 🐘 PHP 8.5 features used
+
+- `final readonly class JsonErrorRenderer` — the renderer holds an injected `ResponseFactoryInterface` and a `bool $debug` flag, both `readonly`.
+- Strict-typed constructor + return types.
+- `JSON_THROW_ON_ERROR` for fail-fast encoding.
+
+## 🧪 Testing
+
+```bash
+docker exec -w /waffle-commons/error-handler waffle-dev composer tests
+```
+
+## 📄 License
+
+MIT — see [LICENSE.md](./LICENSE.md).

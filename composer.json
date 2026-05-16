@@ -1,6 +1,6 @@
 {
     "name": "waffle-commons/error-handler",
-    "version": "0.1.0-alpha5",
+    "version": "0.1.0-beta0",
     "description": "ErrorHandler component for Waffle framework.",
     "type": "library",
     "license": "MIT",
@@ -23,7 +23,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.5",
-        "waffle-commons/contracts": "^0.1.0-alpha6",
+        "waffle-commons/contracts": "self.version",
         "psr/http-message": "^2.0",
         "psr/http-factory": "^1.1",
         "psr/log": "^3.0"
@@ -39,6 +39,7 @@
         "formatter": "vendor/bin/mago fmt",
         "linter": "vendor/bin/mago lint",
         "analyzer": "vendor/bin/mago analyze",
+        "guard": "vendor/bin/mago guard",
         "phpunit": "vendor/bin/phpunit --log-junit var/data/phpunit-coverage/junit.xml --coverage-html var/data/phpunit-coverage",
         "benchmark": [
             "Composer\\Config::disableProcessTimeout",
@@ -47,7 +48,8 @@
         "mago": [
             "@formatter",
             "@linter",
-            "@analyzer"
+            "@analyzer",
+            "@guard"
         ],
         "tests": [
             "@phpunit"
@@ -57,10 +59,10 @@
             "@tests"
         ],
         "ci": [
-          "@mago",
-          "@tests",
-          "composer audit",
-          "vendor/bin/psalm --taint-analysis"
+            "@mago",
+            "@tests",
+            "composer audit",
+            "vendor/bin/psalm --taint-analysis"
         ]
     },
     "config": {
@@ -68,5 +70,15 @@
             "carthage-software/mago": true,
             "cyclonedx/cyclonedx-php-composer": true
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "canonical": false,
+            "url": "../contracts",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
 }
