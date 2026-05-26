@@ -10,6 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 use Waffle\Commons\Contracts\ErrorHandler\ErrorRendererInterface;
 use Waffle\Commons\Contracts\Exception\Validation\ValidationExceptionInterface;
+use Waffle\Commons\Contracts\Routing\Exception\MethodNotAllowedExceptionInterface;
 use Waffle\Commons\Contracts\Routing\Exception\RouteNotFoundExceptionInterface;
 
 /**
@@ -60,7 +61,14 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
         $response->getBody()->write($json);
         $response->getBody()->rewind();
 
-        return $response->withHeader('Content-Type', 'application/problem+json');
+        $response = $response->withHeader('Content-Type', 'application/problem+json');
+
+        if ($e instanceof MethodNotAllowedExceptionInterface) {
+            // Inject the Allow header containing allowed methods separated by commas (e.g. Allow: GET, POST)
+            $response = $response->withHeader('Allow', implode(', ', $e->getAllowedMethods()));
+        }
+
+        return $response;
     }
 
     private function determineStatusCode(Throwable $e): int
@@ -78,10 +86,13 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
             return $code;
         }
 
-        // Common mapping for specific exceptions could go here
-        // Common mapping for specific exceptions
+        // Map specific exceptions to their corresponding HTTP status codes
         if ($e instanceof RouteNotFoundExceptionInterface) {
             return 404;
+        }
+
+        if ($e instanceof MethodNotAllowedExceptionInterface) {
+            return 405;
         }
 
         if ($e instanceof \InvalidArgumentException) {
