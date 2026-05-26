@@ -1,6 +1,6 @@
 {
     "name": "waffle-commons/error-handler",
-    "description": "ErrorHandler component for Waffle framework.",
+    "description": "Error-Handler component for Waffle framework.",
     "type": "library",
     "license": "MIT",
     "autoload": {
