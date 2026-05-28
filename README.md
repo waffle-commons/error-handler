@@ -65,7 +65,7 @@ Extensions added by Waffle:
 
 ## 🧩 Status-code resolution
 
-`JsonErrorRenderer::determineStatusCode(Throwable $e)` walks well-known exception interfaces (e.g. `RouteNotFoundExceptionInterface` → 404, `ValidationExceptionInterface` → 422, `\InvalidArgumentException` → 400) and falls back to `500` for unknown throwables. The matching is interface-based — your application exceptions can opt in by implementing the right contract interface.
+`JsonErrorRenderer::determineStatusCode(Throwable $e)` walks well-known exception interfaces (e.g. `ValidationExceptionInterface` → 422, `RouteNotFoundExceptionInterface` → 404, `MethodNotAllowedExceptionInterface` → 405, `\InvalidArgumentException` → 400) and falls back to `500` for unknown throwables. The matching is interface-based — your application exceptions can opt in by implementing the right contract interface. For a `MethodNotAllowedExceptionInterface`, the renderer also emits an RFC 7231 `Allow` header (e.g. `Allow: GET, HEAD, OPTIONS, POST`).
 
 ## 🐘 PHP 8.5 features used
 

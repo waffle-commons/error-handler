@@ -203,4 +203,38 @@ final class JsonErrorRendererTest extends TestCase
 
         $renderer->render($exception, $request);
     }
+
+    public function testRenderOmitsAllowHeaderWhenAllowedMethodsAreEmpty(): void
+    {
+        $factory = $this->createMock(ResponseFactoryInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $stream->method('write')->willReturn(0);
+        $response->method('getBody')->willReturn($stream);
+
+        // With an empty allowed-methods list, only Content-Type is set — never a
+        // value-less Allow header.
+        $response
+            ->expects($this->once())
+            ->method('withHeader')
+            ->with('Content-Type', 'application/problem+json')
+            ->willReturnSelf();
+
+        $factory->expects($this->once())->method('createResponse')->with(405)->willReturn($response);
+
+        $request = $this->createStub(ServerRequestInterface::class);
+        $request->method('getUri')->willReturn($this->createStub(UriInterface::class));
+
+        $renderer = new JsonErrorRenderer($factory, debug: false);
+
+        $exception = new class extends RuntimeException implements
+            \Waffle\Commons\Contracts\Routing\Exception\MethodNotAllowedExceptionInterface {
+            public function getAllowedMethods(): array
+            {
+                return [];
+            }
+        };
+
+        $renderer->render($exception, $request);
+    }
 }

@@ -64,8 +64,13 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
         $response = $response->withHeader('Content-Type', 'application/problem+json');
 
         if ($e instanceof MethodNotAllowedExceptionInterface) {
-            // Inject the Allow header containing allowed methods separated by commas (e.g. Allow: GET, POST)
-            $response = $response->withHeader('Allow', implode(', ', $e->getAllowedMethods()));
+            // Inject the Allow header (RFC 7231 §7.4.1) listing the allowed methods,
+            // comma-separated (e.g. "Allow: GET, POST"). Guard against an empty list so
+            // a malformed, value-less Allow header is never emitted on the response.
+            $allowedMethods = $e->getAllowedMethods();
+            if ($allowedMethods !== []) {
+                $response = $response->withHeader('Allow', implode(', ', $allowedMethods));
+            }
         }
 
         return $response;
