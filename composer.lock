@@ -538,12 +538,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/waffle-commons/contracts.git",
-                "reference": "b7b36cd1159cfbc2628f1858d53e2fa92f3acf6c"
+                "reference": "d746894c23efeb7bf593c7e25beb1fba201f125d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/waffle-commons/contracts/zipball/b7b36cd1159cfbc2628f1858d53e2fa92f3acf6c",
-                "reference": "b7b36cd1159cfbc2628f1858d53e2fa92f3acf6c",
+                "url": "https://api.github.com/repos/waffle-commons/contracts/zipball/d746894c23efeb7bf593c7e25beb1fba201f125d",
+                "reference": "d746894c23efeb7bf593c7e25beb1fba201f125d",
                 "shasum": ""
             },
             "require": {
@@ -587,7 +587,7 @@
                 "issues": "https://github.com/waffle-commons/contracts/issues",
                 "source": "https://github.com/waffle-commons/contracts/tree/main"
             },
-            "time": "2026-05-25T01:02:31+00:00"
+            "time": "2026-05-29T10:56:32+00:00"
         }
     ],
     "packages-dev": [
