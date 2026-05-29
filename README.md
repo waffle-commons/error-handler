@@ -9,8 +9,8 @@
 Waffle Error Handler Component
 ==============================
 
-> **Release:** `v0.1.0-beta1`
-> **PSR Compliance:** PSR-15 (middleware), PSR-3 (logging), RFC 7807 (`application/problem+json`)
+> **Release:** `v0.1.0-beta2` &nbsp;|&nbsp; [`CHANGELOG.md`](./CHANGELOG.md)
+> **PSR Compliance:** PSR-15 (middleware), PSR-3 (logging), RFC 7807 (`application/problem+json`), RFC 7231 (`Allow` header on `405`)
 
 The outermost middleware in every Waffle pipeline. Catches `Throwable` thrown deeper in the stack, logs it via the injected PSR-3 logger, and renders an RFC 7807 "Problem Details" JSON response.
 
@@ -72,6 +72,21 @@ Extensions added by Waffle:
 - `final readonly class JsonErrorRenderer` — the renderer holds an injected `ResponseFactoryInterface` and a `bool $debug` flag, both `readonly`.
 - Strict-typed constructor + return types.
 - `JSON_THROW_ON_ERROR` for fail-fast encoding.
+
+## 🧭 Architectural boundary (`mago guard`)
+
+An active dependency **perimeter** is enforced on every CI run by `vendor/bin/mago guard` (bundled into `composer mago`; zero baselines). The rules live in [`mago.toml`](./mago.toml) under `[guard.perimeter]` — a forbidden `use` statement fails the build, not a reviewer.
+
+Production code under `Waffle\Commons\ErrorHandler` may depend **only** on:
+
+- `Waffle\Commons\ErrorHandler\**` — itself
+- `Waffle\Commons\Contracts\**` — the shared contracts package, the **only** Waffle dependency permitted
+- `Psr\**` — PSR interfaces (PSR-7 / PSR-15 / PSR-17)
+- `@global` + `Psl\**` — PHP core and the PHP Standard Library
+
+Test code under `WaffleTests\Commons\ErrorHandler` is unrestricted (`@all`). Structural rules are guarded too: interfaces must be named `*Interface`, `Exception\**` classes must end in `*Exception`, and any `Enum\**` namespace may hold only `enum` declarations.
+
+Contract-first, component-agnostic by construction: components compose through `waffle-commons/contracts`, never directly through one another.
 
 ## 🧪 Testing
 
