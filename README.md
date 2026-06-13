@@ -10,7 +10,7 @@
 Waffle Error Handler Component
 ==============================
 
-> **Release:** `0.1.0-beta3` &nbsp;|&nbsp; [`CHANGELOG.md`](./CHANGELOG.md)
+> **Release:** `0.1.0-beta4` &nbsp;|&nbsp; [`CHANGELOG.md`](./CHANGELOG.md)
 > **PSR Compliance:** PSR-15 (middleware), PSR-3 (logging), RFC 7807 (`application/problem+json`), RFC 7231 (`Allow` header on `405`)
 
 The outermost middleware in every Waffle pipeline. Catches `Throwable` thrown deeper in the stack, logs it via the injected PSR-3 logger, and renders an RFC 7807 "Problem Details" JSON response.
