@@ -28,11 +28,21 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
         $status = $this->determineStatusCode($e);
         $response = $this->responseFactory->createResponse($status);
 
+        // LEAK-03: mask every exception message by default — only the RFC-7807
+        // title is client-safe. Surface the real message ONLY in debug, or for an
+        // allow-list of client-safe exception types (validation field errors,
+        // route-not-found, method-not-allowed), regardless of status. This stops a
+        // 403 SecurityException leaking the controller FQCN/method in production.
+        $clientSafe =
+            $e instanceof ValidationExceptionInterface
+            || $e instanceof RouteNotFoundExceptionInterface
+            || $e instanceof MethodNotAllowedExceptionInterface;
+
         $payload = [
             'type' => 'about:blank', // Should be a URI to documentation in a real app
             'title' => $this->getTitleForStatus($status),
             'status' => $status,
-            'detail' => $e->getMessage(),
+            'detail' => $this->debug || $clientSafe ? $e->getMessage() : $this->getTitleForStatus($status),
             'instance' => $request->getUri()->getPath(),
         ];
 
@@ -49,11 +59,6 @@ final readonly class JsonErrorRenderer implements ErrorRendererInterface
             $payload['trace'] = explode("\n", $e->getTraceAsString());
             $payload['file'] = $e->getFile();
             $payload['line'] = $e->getLine();
-        }
-
-        // In production, mask generic internal errors to avoid leaking info
-        if ($status >= 500 && !$this->debug) {
-            $payload['detail'] = 'An internal server error occurred.';
         }
 
         $json = json_encode($payload, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
