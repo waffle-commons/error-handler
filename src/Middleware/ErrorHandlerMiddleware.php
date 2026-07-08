@@ -44,7 +44,9 @@ final readonly class ErrorHandlerMiddleware implements MiddlewareInterface
     {
         $this->logger->critical(message: $e->getMessage(), context: [
             'exception' => get_class($e),
-            // 'trace' => $e->getTrace(), // Uncomment for stack trace
+            // OBS-02: full stack trace for server-side forensics — logged ONLY,
+            // never serialised into the client response (LEAK-03 masks the client).
+            'trace' => $e->getTraceAsString(),
             'file' => $e->getFile(),
             'line' => $e->getLine(),
             'method' => $request->getMethod(),

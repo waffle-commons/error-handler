@@ -5,6 +5,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Released in lockstep with the Waffle Commons umbrella tag.
 
+## [0.1.0-beta5] — 2026-07-08
+
+**Theme: fail-safe error masking & forensics.**
+
+### Security
+- **LEAK-03** — `JsonErrorRenderer::render()` now masks every exception message by default: `detail` falls back to the RFC 7807 `title` instead of echoing `Throwable::getMessage()`. The real message is surfaced **only** in debug mode or for a fixed allow-list of client-safe exception types — `ValidationExceptionInterface` (field messages), `RouteNotFoundExceptionInterface`, and `MethodNotAllowedExceptionInterface` — regardless of HTTP status. A `403` (or any non-5xx) no longer leaks the controller FQCN/method or other internal detail to the client. Covered by `testRenderMasksLeakySecurityMessageInProd` and `testRenderSurfacesClientSafeRouteNotFoundMessageInProd`.
+- Removed the previous status-driven masking (`status >= 500 && !debug → "An internal server error occurred."`); masking is now type-driven and applies at every status, closing the gap where 4xx leaks slipped through.
+
+### Changed
+- **OBS-02** — `ErrorHandlerMiddleware` restores full server-side stack-trace capture: the critical log entry now records `getTraceAsString()` for forensics. The trace is logged only and is never serialised into the client response (the renderer masks the client per LEAK-03).
+- Enabled the `cyclomatic-complexity` Mago lint rule with a `threshold = 50`.
+
 ## [0.1.0-beta4] — 2026-06-13
 
 ### Changed

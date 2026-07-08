@@ -108,12 +108,78 @@ final class JsonErrorRendererTest extends TestCase
             ->willReturnCallback(function ($json) {
                 $data = json_decode(json: $json, associative: true);
                 $this->assertArrayNotHasKey('trace', $data);
-                $this->assertEquals('An internal server error occurred.', $data['detail']);
+                // LEAK-03: the secret message is masked behind the RFC-7807 title.
+                $this->assertEquals('Internal Server Error', $data['detail']);
+                $this->assertStringNotContainsString('Secret DB Error', $json);
                 return strlen($json);
             });
 
         $renderer = new JsonErrorRenderer($factory, debug: false);
         $exception = new RuntimeException('Secret DB Error');
+
+        $renderer->render($exception, $request);
+    }
+
+    public function testRenderMasksLeakySecurityMessageInProd(): void
+    {
+        // LEAK-03: a 403 whose message names the controller FQCN/method must never
+        // reach the client in prod — detail falls back to the RFC-7807 title.
+        $factory = $this->createMock(ResponseFactoryInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $request = $this->createStub(ServerRequestInterface::class);
+        $uri = $this->createStub(UriInterface::class);
+
+        $uri->method('getPath')->willReturn('/secure');
+        $request->method('getUri')->willReturn($uri);
+        $response->method('getBody')->willReturn($stream);
+        $response->method('withHeader')->willReturnSelf();
+        $factory->expects($this->once())->method('createResponse')->with(403)->willReturn($response);
+
+        $leak = 'App\\Controller\\AccountController::delete declares no #[Voter]';
+        $stream
+            ->expects($this->once())
+            ->method('write')
+            ->willReturnCallback(function ($json) use ($leak) {
+                $data = json_decode(json: $json, associative: true);
+                $this->assertSame('Forbidden', $data['detail']);
+                $this->assertStringNotContainsString($leak, $json);
+                $this->assertStringNotContainsString('AccountController', $json);
+                return strlen($json);
+            });
+
+        $renderer = new JsonErrorRenderer($factory, debug: false);
+        $renderer->render(new RuntimeException($leak, 403), $request);
+    }
+
+    public function testRenderSurfacesClientSafeRouteNotFoundMessageInProd(): void
+    {
+        // LEAK-03: route-not-found is on the client-safe allow-list, so its
+        // message is surfaced even in prod (debug off).
+        $factory = $this->createMock(ResponseFactoryInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $request = $this->createStub(ServerRequestInterface::class);
+        $uri = $this->createStub(UriInterface::class);
+
+        $uri->method('getPath')->willReturn('/missing');
+        $request->method('getUri')->willReturn($uri);
+        $response->method('getBody')->willReturn($stream);
+        $response->method('withHeader')->willReturnSelf();
+        $factory->expects($this->once())->method('createResponse')->with(404)->willReturn($response);
+
+        $stream
+            ->expects($this->once())
+            ->method('write')
+            ->willReturnCallback(function ($json) {
+                $data = json_decode(json: $json, associative: true);
+                $this->assertSame('No route matched /missing', $data['detail']);
+                return strlen($json);
+            });
+
+        $renderer = new JsonErrorRenderer($factory, debug: false);
+        $exception = new class('No route matched /missing') extends RuntimeException implements
+            RouteNotFoundExceptionInterface {};
 
         $renderer->render($exception, $request);
     }
