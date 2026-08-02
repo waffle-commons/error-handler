@@ -95,6 +95,12 @@ Contract-first, component-agnostic by construction: components compose through `
 docker exec -w /waffle-commons/error-handler waffle-dev composer tests
 ```
 
+## 📚 Documentation
+
+Central framework docs live in the [waffle-commons/documentation](https://github.com/waffle-commons/documentation) repository:
+
+- Reference: [error-handler](https://github.com/waffle-commons/documentation/blob/main/reference/error-handler.md)
+
 ## 📄 License
 
 MIT — see [LICENSE.md](./LICENSE.md).
