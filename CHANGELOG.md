@@ -5,9 +5,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Released in lockstep with the Waffle Commons umbrella tag.
 
-## [0.1.0-beta6] — 2026-08-03
+## [0.1.0-beta6] — 2026-08-22
 
-**Theme: documentation.**
+**Theme: worker-safety audit coverage.**
+
+### Changed
+- **Worker-safety audit coverage.** This component was never audited by `wfl igor`: it had no `igor-php/igor-php` in `require-dev`, so the ecosystem runner silently skipped it for four releases. It now ships `igor.json`, the `composer igor` script, and the dev dependency, and is part of the 0-KO gate.
 
 ### Documentation
 - The README now links into the central Diátaxis documentation tree (DOC-02).
