@@ -25,7 +25,7 @@ composer require waffle-commons/error-handler
 
 | Class | Role |
 | :--- | :--- |
-| `Waffle\Commons\ErrorHandler\Middleware\ErrorHandlerMiddleware` | PSR-15 middleware. Wraps `$handler->handle()` in `try/catch(Throwable)`, logs, then delegates to the renderer. |
+| `Waffle\Commons\ErrorHandler\Middleware\ErrorHandlerMiddleware` | PSR-15 middleware. Wraps `$handler->handle()` in `try/catch(Throwable)`, delegates to the renderer, then logs at a severity that follows the rendered status: 5xx at `critical` with the stack trace, 4xx at `notice` without it. |
 | `Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer` | `final readonly` renderer implementing `ErrorRendererInterface`. Produces RFC 7807 JSON. |
 
 ## 🚀 Wiring it up
