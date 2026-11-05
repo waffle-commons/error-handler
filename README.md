@@ -10,7 +10,7 @@
 Waffle Error Handler Component
 ==============================
 
-> **Release:** `0.1.0-beta6` &nbsp;|&nbsp; [`CHANGELOG.md`](./CHANGELOG.md)
+> **Release:** `0.1.0-beta7` &nbsp;|&nbsp; [`CHANGELOG.md`](./CHANGELOG.md)
 > **PSR Compliance:** PSR-15 (middleware), PSR-3 (logging), RFC 7807 (`application/problem+json`), RFC 7231 (`Allow` header on `405`)
 
 The outermost middleware in every Waffle pipeline. Catches `Throwable` thrown deeper in the stack, logs it via the injected PSR-3 logger, and renders an RFC 7807 "Problem Details" JSON response.
@@ -25,7 +25,7 @@ composer require waffle-commons/error-handler
 
 | Class | Role |
 | :--- | :--- |
-| `Waffle\Commons\ErrorHandler\Middleware\ErrorHandlerMiddleware` | PSR-15 middleware. Wraps `$handler->handle()` in `try/catch(Throwable)`, logs, then delegates to the renderer. |
+| `Waffle\Commons\ErrorHandler\Middleware\ErrorHandlerMiddleware` | PSR-15 middleware. Wraps `$handler->handle()` in `try/catch(Throwable)`, delegates to the renderer, then logs at a severity that follows the rendered status: 5xx at `critical` with the stack trace, 4xx at `notice` without it. |
 | `Waffle\Commons\ErrorHandler\Renderer\JsonErrorRenderer` | `final readonly` renderer implementing `ErrorRendererInterface`. Produces RFC 7807 JSON. |
 
 ## 🚀 Wiring it up

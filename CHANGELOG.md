@@ -5,6 +5,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Released in lockstep with the Waffle Commons umbrella tag.
 
+## [0.1.0-beta7] — 2026-11
+
+**Theme: log severity follows the rendered status.**
+
+### Fixed
+- **Log severity now follows the rendered status.** `ErrorHandlerMiddleware` logged every exception at `critical` with a full stack trace, client errors included: any client could grow the log at will (about twenty lines per rejected request), and alerting on `critical` was meaningless. The EcoShield Gateway perimeter campaign surfaced it. The middleware now renders first, then logs a 5xx at `critical` with the trace and a 4xx at `notice` without it; both entries carry the `status`. If the renderer itself fails, the original fault is still logged at `critical` before that failure propagates.
+
 ## [0.1.0-beta6] — 2026-09
 
 **Theme: worker-safety audit coverage.**
